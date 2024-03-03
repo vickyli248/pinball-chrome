@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Space+Grotesk:wght@300..700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+:root {
+    font-family: Space Grotesk, sans-serif, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    border-radius: 10px; /* Adjust the value as needed */
+}  
+/* style.css */
+body {
+    padding: 8px 24px 16px 24px;
+    width: 450px;
+    margin: 0;
+    background: white;
+    box-sizing: border-box;
+}
+
+.popup {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header {
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+h2 {
+    color: #333;
+    font-size: 1.5em;
+    margin-right: auto;
+}
+
+.pin-icon {
+    height: 15px;
+    width: auto;
+}
+
+#captureBtn {
+    background-color: #4E61A1;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 12px;
+    font-size: 1.5em;
+}
+
+#captureBtn:hover {
+    background-color: #3d4d83;
+}
+
+#yourPins {
+    width: 100%;
+    border: 2.5px dashed #ACACAC;
+    border-radius: 8px;
+    padding: 0px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    box-sizing: border-box; /* Include padding in width calculation */
+}

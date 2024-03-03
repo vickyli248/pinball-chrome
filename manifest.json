@@ -1,0 +1,30 @@
+{
+    "manifest_version": 3,
+    "name": "Pinball",
+    "version": "1.0",
+    "description": "Visually capture your thoughts",
+    "permissions": ["storage", "declarativeContent", "activeTab", "scripting"],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "pin.png",
+        "48": "pin.png",
+        "128": "pin.png"
+      }
+    },
+    "icons": {
+      "16": "pin.png",
+      "48": "pin.png",
+      "128": "pin.png"
+    },
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["popup.js"]
+      }
+    ]
+  }
+  
