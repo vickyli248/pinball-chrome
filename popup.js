@@ -1,9 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   console.log('DOMContentLoaded event triggered');
   document.getElementById('captureBtn').addEventListener('click', () => {
-    document.getElementById('captureBtn').addEventListener('click', () => {
-      addTestText();
-    });
+    addTestText();
   });
 });
 
