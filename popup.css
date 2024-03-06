@@ -28,6 +28,12 @@ body {
     width: 100%;
 }
 
+input {
+    margin-right: 12px;
+    height: 25px;
+    width: 200px;
+}
+
 h2 {
     color: #333;
     font-size: 1.5em;
@@ -68,3 +74,8 @@ h2 {
     align-items: start;
     box-sizing: border-box; /* Include padding in width calculation */
 }
+
+#yourPins img {
+    width: 100%;
+}
+
