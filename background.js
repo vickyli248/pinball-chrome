@@ -7,7 +7,7 @@ chrome.runtime.onInstalled.addListener(() => {
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     if (message.command === "takeScreenshot") {
       chrome.tabs.captureVisibleTab(function(screenshotUrl) {
-        chrome.runtime.sendMessage({command: "updateScreenshot", screenshotUrl: screenshotUrl});
+        chrome.runtime.sendMessage({command: "updateScreenshotList", screenshotUrl: screenshotUrl});
       });
     }
   });  

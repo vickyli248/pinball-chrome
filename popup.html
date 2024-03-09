@@ -9,14 +9,16 @@
 <body>
     <div class="popup">
         <div class="header">
-            <h2>pinball</h2>
+            <img src="pinball-logo.svg" class="logo"/>
             <input type="text" id="inputField" placeholder="Write something down">
             <button id="captureBtn">
                 <img src="pin-icon-flat.png" class="pin-icon">
             </button>
+            <button id="clearBtn">Clear</button>
         </div>
-        <div id="yourPins">
-            <h3>your pins</h3>
+        <div id="pinSection">
+            <!-- <h3>your pins</h3> -->
+            <div id="yourPins"></div>
         </div>
     </div>
     <script src="popup.js"></script>
