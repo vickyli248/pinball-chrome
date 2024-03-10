@@ -3,7 +3,7 @@
   "name": "Pinball",
   "version": "1.0",
   "description": "Visually capture your thoughts",
-  "permissions": ["storage", "declarativeContent", "activeTab", "scripting", "tabs"],
+  "permissions": ["storage", "unlimitedStorage", "declarativeContent", "activeTab", "scripting", "tabs"],
   "background": {
     "service_worker": "background.js",
     "persistent": false

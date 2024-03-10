@@ -2,19 +2,47 @@
 var screenshotsList = [];
 var doneScreenshotsList = [];
 
-document.addEventListener('DOMContentLoaded', function() {
-  var screenshotButton = document.getElementById('captureBtn');
-  var inputField = document.getElementById('inputField');
-  var clearBtn = document.getElementById('clearBtn');
+const screenshotButton = document.getElementById('captureBtn');
+const inputField = document.getElementById('inputField');
+const clearBtn = document.getElementById('clearBtn');
+const successMsg = document.getElementById('successMsg');
+const clearConfirmation = document.getElementById('clearConfirmation');
+const clearConfirmBtn = document.getElementById('clearConfirmBtn');
+const abortClearBtn = document.getElementById('abortClearBtn');
 
+document.addEventListener('DOMContentLoaded', function() {
   inputField.focus();
 
   screenshotButton.addEventListener('click', function() {
     chrome.runtime.sendMessage({command: "takeScreenshot"});
+
+    // Calculate position for the popup
+    const buttonRect = captureBtn.getBoundingClientRect();
+    console.log(buttonRect);
+    successMsg.style.top = buttonRect.bottom + 5 + 'px';
+    successMsg.style.right = buttonRect.top + 8 + 'px';
+
+    // Show the successMsg
+    successMsg.classList.remove('hidden');
+
+    // Hide the successMsg after 2 seconds
+    setTimeout(function() {
+      successMsg.classList.add('hidden');
+    }, 2000);
+
   });
 
   clearBtn.addEventListener('click', function() {
+    clearConfirmation.style.display = 'block';
+  });
+
+  abortClearBtn.addEventListener('click', function() {
+    clearConfirmation.style.display = 'none';
+  });
+
+  clearConfirmBtn.addEventListener('click', function() {
     clearData();
+    clearConfirmation.style.display = 'none';
   });
 
   loadStoredScreenshots();
@@ -42,6 +70,9 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     });
 
     console.log("pending list", screenshotsList);
+
+    inputField.value = ""; 
+    inputField.focus();
   }
 });
 
@@ -70,36 +101,42 @@ function loadStoredScreenshots() {
 
     screenshotsList = []; // Clear screenshotsList before loading stored screenshots
 
-    screenshots.forEach(function(screenshot) {
+    for (let i = screenshots.length - 1; i >= 0; i--) {
+      const screenshot = screenshots[i];
       screenshotsList.push({id: screenshot.id, url: screenshot.url, caption: screenshot.caption, checked: screenshot.checked});
+      
       // Display only pending screenshots
       if (!doneScreenshotsList.find(doneScreenshot => doneScreenshot.id === screenshot.id)) {
         var pin = document.createElement('div');
         pin.className = 'pin';
-
+    
         var pinContent = document.createElement('div');
         pinContent.className = 'pin-content';
         pin.appendChild(pinContent);
-
+    
         var checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.checked = screenshot.checked; 
         checkbox.className = 'pin-checkbox';
         pinContent.appendChild(checkbox);
-
+    
         var textElement = document.createElement('p');
         textElement.textContent = screenshot.caption;
         pinContent.appendChild(textElement);
-
+    
         var img = document.createElement('img');
         img.src = screenshot.url;
         pin.appendChild(img);
-
+    
         yourPins.appendChild(pin);
-
-        // restoreCheckboxState(screenshot.url);
       }
-    });
+    }
+    if (screenshotsList.length > 0) {
+      console.log('worked')
+      clearBtn.style.display = 'block';
+    } else {
+      clearBtn.style.display = 'none';
+    }
   });
 }
 
@@ -151,6 +188,9 @@ function clearData() {
   // Clear global screenshotsList and doneScreenshotsList
   screenshotsList = [];
   doneScreenshotsList = [];
+
+  loadStoredScreenshots();
+  inputField.focus();
 }
 
 // function saveCheckboxState(screenshotUrl, isChecked) {

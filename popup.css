@@ -5,11 +5,16 @@
 }  
 /* style.css */
 body {
-    padding: 8px 24px 16px 24px;
-    width: 550px;
+    padding: 16px 24px 16px 24px;
+    width: 650px;
     margin: 0;
     background: #F6F8FA;
     box-sizing: border-box;
+}
+
+h2 {
+    margin: 0;
+    font-weight: 500;
 }
 
 p {
@@ -17,12 +22,16 @@ p {
     font-size: 1.2em;
 }
 
+.link-btn {
+    font-weight: 500;
+}
+
 .popup {
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
+    align-items: end;
 }
 
 .header {
@@ -31,6 +40,7 @@ p {
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    margin-bottom: 12px;
 }
 
 #inputField {
@@ -113,21 +123,18 @@ button {
 }
 
 #clearBtn {
-    margin-bottom: 10px;
-    padding: 5px 10px;
-    background-color: white;
-    transition: background-color 0.3s ease;
-    color: black;
-    border-color: grey;
-    border: 1px solid grey;
-    border-radius: 5px;
+    transition: color 0.3s ease;
+    color: #A2302A;
     cursor: pointer;
-    margin-left: 10px;
-    margin-top: 10px;
+    margin-top: 12px;
+    background-color: #F6F8FA;
+    border: none;
+    padding: 0px;
+    display: none;
 }
   
 #clearBtn:hover {
-    background-color: #E7E7E7;
+    color: rgb(118, 35, 29)
 }
 
 .screenshot-container {
@@ -140,4 +147,67 @@ button {
 
 .screenshot-container img {
     width: 100%;
+}
+
+/* Styles for the popup */
+#successMsg {
+    position: absolute;
+    background-color: #2C2C2C;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    animation: fadeInOut 2s ease-in-out;
+    color: white;
+}
+  
+.hidden {
+    display: none;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+#clearConfirmation {
+    display: flex;
+    flex-direction: column;
+    padding: 16px 24px;
+    background-color: #2C2C2C;
+    color: white;
+    border-radius: 8px;
+    align-items: start;
+    position: absolute;
+    display: none;
+}
+
+#clearConfirmation h2 {
+    margin-bottom: 4px;
+}
+
+.btn-row {
+    display: flex;
+    flex-direction: row;
+    margin-top: 16px;
+    width: 100%;
+    padding: 0;
+}
+
+.clearModalBtn {
+    background-color: white;
+    color: #2C2C2C;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 8px;
+    cursor: pointer;
+    margin-right: auto;
+}
+
+.kill {
+    background-color: #A2302A;
+    color: white;
+    margin-left: auto;
+    margin-right: 0px;
 }

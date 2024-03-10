@@ -14,11 +14,20 @@
             <button id="captureBtn">
                 <img src="pin-icon-flat.png" class="pin-icon">
             </button>
-            <button id="clearBtn">Clear</button>
+            <div id="successMsg" class="hidden">pinned! 😁</div>
         </div>
         <div id="pinSection">
             <!-- <h3>your pins</h3> -->
             <div id="yourPins"></div>
+        </div>
+        <button id="clearBtn" class="link-btn">Clear pins</button>
+        <div id="clearConfirmation" class="link-btn">
+            <h2> u sure? </h2>
+            <p> once you clear, you can't get them back</p>
+            <div class="btn-row">
+                <button id="abortClearBtn" class="clearModalBtn">abort abort!</button>
+                <button id="clearConfirmBtn" class="clearModalBtn kill">kill them.</button>
+            </div>
         </div>
     </div>
     <script src="popup.js"></script>
