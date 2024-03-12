@@ -1,15 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Space+Grotesk:wght@300..700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 :root {
     font-family: Space Grotesk, sans-serif, system-ui, Avenir, Helvetica, Arial, sans-serif;
-    border-radius: 10px; /* Adjust the value as needed */
 }  
 /* style.css */
 body {
     padding: 16px 24px 16px 24px;
-    width: 650px;
+    width: 600px;
     margin: 0;
     background: #F6F8FA;
     box-sizing: border-box;
+}
+
+.ext-wrapper {
+    padding: 16px 24px 16px 24px;
+    width: 600px;
+    margin: 0;
+    background: #F6F8FA;
+    box-sizing: border-box;
+    border-radius: 10px;
 }
 
 h2 {

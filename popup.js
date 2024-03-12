@@ -124,6 +124,7 @@ function loadStoredScreenshots() {
       if (!doneScreenshotsList.find(doneScreenshot => doneScreenshot.id === screenshot.id)) {
         var pin = document.createElement('div');
         pin.className = 'pin';
+        pin.id = 'pin-' + screenshot.id;
     
         var pinContent = document.createElement('div');
         pinContent.className = 'pin-content';
@@ -134,6 +135,15 @@ function loadStoredScreenshots() {
         checkbox.checked = screenshot.checked; 
         checkbox.className = 'pin-checkbox';
         pinContent.appendChild(checkbox);
+
+        checkbox.addEventListener('change', function() {
+          if (this.checked) {
+
+            removeScreenshotAndCaption(screenshot.id);
+            document.getElementById('clearBtn').style.display = 'none';
+
+          }
+        });
     
         var textElement = document.createElement('p');
         textElement.textContent = screenshot.caption;
@@ -152,6 +162,26 @@ function loadStoredScreenshots() {
     } else {
       clearBtn.style.display = 'none';
     }
+  });
+}
+
+function removeScreenshotAndCaption(screenshotId) {
+
+  // Remove the pin element from the DOM
+  var pinToRemove = document.getElementById('pin-' + screenshotId);
+  if (pinToRemove) {
+    pinToRemove.parentNode.removeChild(pinToRemove);
+  }
+
+  // Remove from local storage
+  chrome.storage.local.get({screenshots: []}, function(data) {
+    var updatedScreenshots = data.screenshots.filter(function(screenshot) {
+      return screenshot.id !== screenshotId;
+    });
+
+    chrome.storage.local.set({screenshots: updatedScreenshots}, function() {
+      console.log("Screenshot and caption removed.");
+    });
   });
 }
 
