@@ -13,7 +13,9 @@ const abortClearBtn = document.getElementById('abortClearBtn');
 document.addEventListener('DOMContentLoaded', function() {
   inputField.focus();
 
-  screenshotButton.addEventListener('click', function() {
+  function takeScreenshot() {
+
+    // Take the screenshot
     chrome.runtime.sendMessage({command: "takeScreenshot"});
 
     // Calculate position for the popup
@@ -29,6 +31,19 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(function() {
       successMsg.classList.add('hidden');
     }, 2000);
+
+  }
+
+  screenshotButton.addEventListener('click', function() {
+    takeScreenshot();
+  });
+
+  inputField.addEventListener('keydown', function(event) {
+
+    // Check if the pressed key is 'enter' (key code 13)
+    if (event.keyCode === 13) {
+      takeScreenshot();
+    }
 
   });
 
