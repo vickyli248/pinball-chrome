@@ -179,7 +179,11 @@ button {
     color: white;
     border-radius: 8px;
     align-items: start;
-    position: absolute;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
     display: none;
 }
 
