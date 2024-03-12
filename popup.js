@@ -182,7 +182,12 @@ function removeScreenshotAndCaption(screenshotId) {
     chrome.storage.local.set({screenshots: updatedScreenshots}, function() {
       console.log("Screenshot and caption removed.");
     });
+    
+    loadStoredScreenshots();
   });
+
+  inputField.focus();
+
 }
 
 function moveScreenshotToDone(screenshotUrl) {

@@ -130,6 +130,27 @@ button {
     width: 15px;
 }
 
+.action-row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+#resolvedPinsBtn {
+    transition: color 0.3s ease;
+    color: #3d4d83;
+    cursor: pointer;
+    margin-top: 12px;
+    background-color: #F6F8FA;
+    border: none;
+    padding: 0px;
+    margin-right: auto;
+}
+
+#resolvedPinsBtn:hover {
+    color: #2a3458;
+}
+
 #clearBtn {
     transition: color 0.3s ease;
     color: #A2302A;
@@ -138,6 +159,7 @@ button {
     background-color: #F6F8FA;
     border: none;
     padding: 0px;
+    /* visibility: hidden; */
     display: none;
 }
   
