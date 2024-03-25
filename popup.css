@@ -55,7 +55,7 @@ p {
     font-family: Space Grotesk, sans-serif, system-ui, Avenir, Helvetica, Arial, sans-serif;
     margin-right: 4px;
     height: 25px;
-    width: 200px;
+    width: 300px;
 }
 
 
@@ -105,7 +105,7 @@ button {
 
 #yourPins img {
     width: 100%;
-    border-radius: 4px;
+    border-radius: 6px;
     border: 1.5px dashed #ACACAC;
 }
 
@@ -130,13 +130,14 @@ button {
     width: 15px;
 }
 
-.action-row {
+#actionRow {
     display: flex;
     flex-direction: row;
     width: 100%;
+    display: none;
 }
 
-#resolvedPinsBtn {
+#exportPinsBtn {
     transition: color 0.3s ease;
     color: #3d4d83;
     cursor: pointer;
@@ -147,7 +148,7 @@ button {
     margin-right: auto;
 }
 
-#resolvedPinsBtn:hover {
+#exportPinsBtn:hover {
     color: #2a3458;
 }
 
@@ -159,8 +160,6 @@ button {
     background-color: #F6F8FA;
     border: none;
     padding: 0px;
-    /* visibility: hidden; */
-    display: none;
 }
   
 #clearBtn:hover {

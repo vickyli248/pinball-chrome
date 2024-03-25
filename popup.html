@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Popup</title>
     <link rel="stylesheet" href="popup.css">
+    <script src="html2pdf.bundle.min.js"></script>
 </head>
 <body>
     <div class="popup">
         <div class="header">
             <img src="pinball-logo.svg" class="logo"/>
-            <input type="text" id="inputField" placeholder="Write something down">
+            <input type="text" id="inputField" placeholder="Jot something, or just press enter">
             <button id="captureBtn">
                 <img src="pin-icon-flat.png" class="pin-icon">
             </button>
@@ -20,8 +21,8 @@
             <!-- <h3>your pins</h3> -->
             <div id="yourPins"></div>
         </div>
-        <div class="action-row">
-            <button id="resolvedPinsBtn" class="link-btn">See resolved pins</button>
+        <div id="actionRow">
+            <button id="exportPinsBtn" class="link-btn">Export pins</button>
             <button id="clearBtn" class="link-btn">Clear pins</button>
         </div>
         <div id="clearConfirmation" class="link-btn">

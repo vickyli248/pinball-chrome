@@ -4,11 +4,13 @@ var doneScreenshotsList = [];
 
 const screenshotButton = document.getElementById('captureBtn');
 const inputField = document.getElementById('inputField');
+const actionRow = document.getElementById('actionRow');
 const clearBtn = document.getElementById('clearBtn');
 const successMsg = document.getElementById('successMsg');
 const clearConfirmation = document.getElementById('clearConfirmation');
 const clearConfirmBtn = document.getElementById('clearConfirmBtn');
 const abortClearBtn = document.getElementById('abortClearBtn');
+const exportPinsBtn = document.getElementById('exportPinsBtn');
 
 document.addEventListener('DOMContentLoaded', function() {
   inputField.focus();
@@ -18,19 +20,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // Take the screenshot
     chrome.runtime.sendMessage({command: "takeScreenshot"});
 
-    // Calculate position for the popup
-    const buttonRect = captureBtn.getBoundingClientRect();
-    console.log(buttonRect);
-    successMsg.style.top = buttonRect.bottom + 5 + 'px';
-    successMsg.style.right = buttonRect.top + 8 + 'px';
+    // // Calculate position for the popup
+    // const buttonRect = captureBtn.getBoundingClientRect();
+    // successMsg.style.top = buttonRect.bottom + 5 + 'px';
+    // successMsg.style.right = buttonRect.top + 8 + 'px';
 
-    // Show the successMsg
-    successMsg.classList.remove('hidden');
+    // // Show the successMsg
+    // successMsg.classList.remove('hidden');
 
-    // Hide the successMsg after 2 seconds
-    setTimeout(function() {
-      successMsg.classList.add('hidden');
-    }, 2000);
+    // // Hide the successMsg after 2 seconds
+    // setTimeout(function() {
+    //   successMsg.classList.add('hidden');
+    // }, 2000);
 
   }
 
@@ -41,10 +42,10 @@ document.addEventListener('DOMContentLoaded', function() {
   inputField.addEventListener('keydown', function(event) {
 
     // Check if the pressed key is 'enter' (key code 13)
-    if (event.keyCode === 13) {
+    if (event.key === 'Enter') {
       takeScreenshot();
     }
-
+  
   });
 
   clearBtn.addEventListener('click', function() {
@@ -60,6 +61,32 @@ document.addEventListener('DOMContentLoaded', function() {
     clearConfirmation.style.display = 'none';
   });
 
+  document.getElementById('exportPinsBtn').addEventListener('click', function() {
+    const pins = document.body;
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Month is zero-based
+    const day = String(today.getDate()).padStart(2, '0');
+    const hours = today.getHours() % 12 || 12; // Convert to 12-hour format
+    const minutes = String(today.getMinutes()).padStart(2, '0');
+    const ampm = today.getHours() >= 12 ? 'PM' : 'AM'; // Determine AM/PM
+    const filename = `yourPins_${year}${month}${day}_${hours}${minutes}${ampm}.pdf`;  
+
+    window.scrollTo(0, 0);
+    setTimeout(() => {
+      html2pdf().from(pins).set({
+        // Remove headers and footers
+        headers: null,
+        footers: null,
+        // Set html2canvas options to capture the entire content of the element
+        html2canvas: {
+          scrollY: -window.scrollY
+        }
+      }).save(filename);
+    }, 300);
+
+  });
+
   loadStoredScreenshots();
 });
 
@@ -73,7 +100,13 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     var screenshotUrl = message.screenshotUrl;
 
     // Grab the caption text
-    var inputValue = document.getElementById('inputField').value.trim();
+    var inputValue = '';
+
+    if (document.getElementById('inputField').value.trim()) {
+      inputValue = document.getElementById('inputField').value.trim();
+    } else {
+      inputValue = 'we saved this screenshot for you <3';
+    }
 
     // Push the object to the pending screenshot list
     screenshotsList.push({id: screenshotId, url: screenshotUrl, caption: inputValue, checked: false});
@@ -140,13 +173,16 @@ function loadStoredScreenshots() {
           if (this.checked) {
 
             removeScreenshotAndCaption(screenshot.id);
-            document.getElementById('clearBtn').style.display = 'none';
+            document.getElementById('actionRow').style.display = 'flex';
 
           }
         });
     
         var textElement = document.createElement('p');
         textElement.textContent = screenshot.caption;
+        if (screenshot.caption === 'we saved this screenshot for you <3') {
+          textElement.style.color = '#9c9c9c'
+        }
         pinContent.appendChild(textElement);
     
         var img = document.createElement('img');
@@ -157,10 +193,9 @@ function loadStoredScreenshots() {
       }
     }
     if (screenshotsList.length > 0) {
-      console.log('worked')
-      clearBtn.style.display = 'block';
+      actionRow.style.display = 'flex';
     } else {
-      clearBtn.style.display = 'none';
+      actionRow.style.display = 'none';
     }
   });
 }
@@ -182,7 +217,7 @@ function removeScreenshotAndCaption(screenshotId) {
     chrome.storage.local.set({screenshots: updatedScreenshots}, function() {
       console.log("Screenshot and caption removed.");
     });
-    
+
     loadStoredScreenshots();
   });
 
