@@ -1,6 +1,7 @@
 // Define a global variable to store screenshots
 var screenshotsList = []
 var doneScreenshotsList = []
+var showingTrash = false
 
 const screenshotButton = document.getElementById('captureBtn')
 const inputField = document.getElementById('inputField')
@@ -11,7 +12,9 @@ const clearConfirmation = document.getElementById('clearConfirmation')
 const clearConfirmBtn = document.getElementById('clearConfirmBtn')
 const abortClearBtn = document.getElementById('abortClearBtn')
 const exportPinsBtn = document.getElementById('exportPinsBtn')
-const seeTrash = document.getElementById('seeTrash')
+const seeTrashBtn = document.getElementById('seeTrashBtn')
+const pinsEmptyState = document.getElementById('pinsEmptyState')
+const pinHeaderText = document.getElementById('pinHeaderText')
 
 document.addEventListener('DOMContentLoaded', function () {
     inputField.focus()
@@ -32,8 +35,15 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     })
 
-    seeTrash.addEventListener('click', function () {
-        loadTrash()
+    seeTrashBtn.addEventListener('click', function () {
+        showingTrash = !showingTrash
+        console.log(showingTrash)
+
+        if (showingTrash) {
+            loadTrash()
+        } else {
+            loadStoredScreenshots()
+        }
     })
 
     clearBtn.addEventListener('click', function () {
@@ -127,6 +137,10 @@ function saveScreenshotAndCaption(
 }
 
 function loadStoredScreenshots() {
+    seeTrashBtn.textContent = 'See resolved pins'
+    pinHeaderText.textContent = 'Your pins'
+    showingTrash = false
+
     chrome.storage.local.get({ screenshots: [] }, function (data) {
         var screenshots = data.screenshots
         console.log('load screenshot func screenshots', screenshots)
@@ -180,32 +194,37 @@ function loadStoredScreenshots() {
             yourPins.appendChild(pin)
         }
         if (screenshotsList.length > 0) {
-            actionRow.style.display = 'flex'
+            pinsEmptyState.style.display = 'none'
         } else {
-            actionRow.style.display = 'none'
+            pinsEmptyState.style.display = 'flex'
         }
     })
 }
 
 function loadTrash() {
+    seeTrashBtn.textContent = 'See open pins'
+    pinHeaderText.textContent = 'Resolved pins'
+    showingTrash = true
+
     chrome.storage.local.get({ trash: [] }, function (data) {
         var trashes = data.trash
         console.log('load trash', trashes)
         var yourPins = document.getElementById('yourPins')
         yourPins.innerHTML = '' // Clear previous content
 
-        screenshotsList = [] // Clear screenshotsList before loading stored screenshots
+        trashList = [] // Clear trashList before loading stored screenshots
 
         for (let i = trashes.length - 1; i >= 0; i--) {
             const trash = trashes[i]
-            screenshotsList.push({
+            console.log('test trash', i, trashes[i])
+            trashList.push({
                 id: trash.id,
                 url: trash.url,
                 caption: trash.caption,
                 checked: trash.checked,
             })
 
-            // Display only pending trashs
+            // Display only pending trashes
             var pin = document.createElement('div')
             pin.className = 'pin'
             pin.id = 'pin-' + trash.id
@@ -214,17 +233,14 @@ function loadTrash() {
             pinContent.className = 'pin-content'
             pin.appendChild(pinContent)
 
-            var checkbox = document.createElement('input')
-            checkbox.type = 'checkbox'
-            checkbox.checked = trash.checked
-            checkbox.className = 'pin-checkbox'
-            pinContent.appendChild(checkbox)
+            var deletePinBtn = document.createElement('button')
+            deletePinBtn.id = 'deletePinBtn'
+            deletePinBtn.textContent = 'x'
+            pinContent.appendChild(deletePinBtn)
 
-            checkbox.addEventListener('change', function () {
-                if (this.checked) {
-                    removeScreenshotAndCaption(trash.id)
-                    document.getElementById('actionRow').style.display = 'flex'
-                }
+            deletePinBtn.addEventListener('click', function () {
+                console.log('detlte here')
+                deleteForever(trash.id)
             })
 
             var textElement = document.createElement('p')
@@ -240,10 +256,10 @@ function loadTrash() {
 
             yourPins.appendChild(pin)
         }
-        if (screenshotsList.length > 0) {
-            actionRow.style.display = 'flex'
+        if (trashList.length > 0) {
+            pinsEmptyState.style.display = 'none'
         } else {
-            actionRow.style.display = 'none'
+            pinsEmptyState.style.display = 'flex'
         }
     })
 }
@@ -278,6 +294,27 @@ function removeScreenshotAndCaption(screenshotId) {
         )
 
         loadStoredScreenshots()
+    })
+}
+
+function deleteForever(trashId) {
+    // Remove the pin element from the DOM
+    var pinToRemove = document.getElementById('pin-' + trashId)
+    if (pinToRemove) {
+        pinToRemove.parentNode.removeChild(pinToRemove)
+    }
+
+    // Remove from local storage
+    chrome.storage.local.get({ trash: [] }, function (data) {
+        var updatedTrash = data.trash.filter(function (trash) {
+            return trash.id !== trashId
+        })
+
+        chrome.storage.local.set({ trash: updatedTrash }, function () {
+            console.log('Screenshot deleted forever.')
+        })
+
+        loadTrash()
     })
 
     inputField.focus()

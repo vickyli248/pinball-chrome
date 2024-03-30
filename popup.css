@@ -31,6 +31,11 @@ h2 {
     font-weight: 500;
 }
 
+h3 {
+    font-size: 1.3em;
+    margin: 0;
+}
+
 p {
     margin: 0;
     font-size: 1.2em;
@@ -45,7 +50,7 @@ p {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: end;
+    align-items: center;
 }
 
 .header {
@@ -53,14 +58,13 @@ p {
     display: flex;
     position: fixed;
     justify-content: space-between;
-    height: 70px;
     top: 0;
     left: 0;
     right: 0;
     background: #f6f8fa;
     align-items: center;
     width: 100%;
-    margin-bottom: 12px;
+    padding: 16px 0px 12px 0px;
 }
 
 #inputField {
@@ -93,7 +97,7 @@ button {
     font-size: 1.5em;
     margin-right: auto;
     height: 30px;
-    margin-left: 20px;
+    margin-left: 24px;
 }
 
 .pin-icon {
@@ -101,7 +105,8 @@ button {
     width: auto;
 }
 
-#captureBtn {
+#captureBtn,
+#exportPinsBtn {
     background-color: #4e61a1;
     color: #fff;
     border: none;
@@ -113,21 +118,49 @@ button {
     align-items: center;
     padding: 8px 12px;
     font-size: 1.5em;
-    margin-right: 20px;
+    width: 32px;
+    height: 32px;
 }
 
 #captureBtn:hover {
     background-color: #3d4d83;
 }
 
+#exportPinsBtn {
+    margin: 0 24px 0 8px;
+    background-color: #525762;
+}
+
+#exportPinsBtn:hover {
+    background-color: #41464f;
+}
+
+#pinsEmptyState {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed #d5d5d5;
+    border-radius: 8px;
+    font-size: 1.2em;
+    color: #979797;
+    margin-top: 12px;
+}
+
 #pinSection {
     width: 100%;
-    padding-top: 60px;
+    padding-top: 48px;
     display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: start;
     box-sizing: border-box;
+    margin-bottom: 28px;
+}
+
+#yourPins {
+    margin-top: 12px;
 }
 
 #yourPins img {
@@ -161,36 +194,38 @@ button {
     display: flex;
     flex-direction: row;
     width: 100%;
-    display: none;
-}
-
-#exportPinsBtn {
-    transition: color 0.3s ease;
-    color: #3d4d83;
-    cursor: pointer;
-    margin-top: 12px;
     background-color: #f6f8fa;
-    border: none;
-    padding: 0px;
-    margin-right: auto;
+    position: fixed;
+    bottom: 0;
+    justify-content: space-between; /* Aligns items on opposite ends */
 }
 
-#exportPinsBtn:hover {
-    color: #2a3458;
-}
-
-#clearBtn {
+#clearBtn, #deletePinBtn {
     transition: color 0.3s ease;
     color: #a2302a;
     cursor: pointer;
-    margin-top: 12px;
     background-color: #f6f8fa;
     border: none;
-    padding: 0px;
+    padding: 0;
+    margin: 12px 24px;
 }
 
 #clearBtn:hover {
     color: rgb(118, 35, 29);
+}
+
+#seeTrashBtn {
+    transition: color 0.3s ease;
+    color: #3d4d83;
+    cursor: pointer;
+    background-color: #f6f8fa;
+    border: none;
+    padding: 0;
+    margin: 12px 24px;
+}
+
+#seeTrashBtn:hover {
+    color: #2a3458;
 }
 
 .screenshot-container {
@@ -278,4 +313,11 @@ button {
     color: white;
     margin-left: auto;
     margin-right: 0px;
+}
+
+#deletePinBtn {
+    margin: 0;
+    margin-right: 12px;
+    font-size: 1.4em;
+    font-weight: 700;
 }
