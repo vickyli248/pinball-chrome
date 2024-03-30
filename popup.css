@@ -1,13 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Space+Grotesk:wght@300..700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 :root {
-    font-family: Space Grotesk, sans-serif, system-ui, Avenir, Helvetica, Arial, sans-serif;
-}  
+    font-family:
+        Space Grotesk,
+        sans-serif,
+        system-ui,
+        Avenir,
+        Helvetica,
+        Arial,
+        sans-serif;
+}
 /* style.css */
 body {
     padding: 16px 24px 16px 24px;
     width: 600px;
     margin: 0;
-    background: #F6F8FA;
+    background: #f6f8fa;
     box-sizing: border-box;
 }
 
@@ -50,22 +57,35 @@ p {
     top: 0;
     left: 0;
     right: 0;
-    background: #F6F8FA;
+    background: #f6f8fa;
     align-items: center;
     width: 100%;
     margin-bottom: 12px;
 }
 
 #inputField {
-    font-family: Space Grotesk, sans-serif, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-family:
+        Space Grotesk,
+        sans-serif,
+        system-ui,
+        Avenir,
+        Helvetica,
+        Arial,
+        sans-serif;
     margin-right: 4px;
     height: 25px;
     width: 300px;
 }
 
-
 button {
-    font-family: Space Grotesk, sans-serif, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-family:
+        Space Grotesk,
+        sans-serif,
+        system-ui,
+        Avenir,
+        Helvetica,
+        Arial,
+        sans-serif;
 }
 
 .logo {
@@ -82,7 +102,7 @@ button {
 }
 
 #captureBtn {
-    background-color: #4E61A1;
+    background-color: #4e61a1;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -113,7 +133,7 @@ button {
 #yourPins img {
     width: 100%;
     border-radius: 6px;
-    border: 1.5px dashed #ACACAC;
+    border: 1.5px dashed #acacac;
 }
 
 .pin {
@@ -123,14 +143,14 @@ button {
     align-items: flex-start;
     margin-bottom: 16px;
 }
-  
+
 .pin-content {
     display: flex;
     align-items: center;
     justify-content: start;
     margin-bottom: 8px;
 }
-    
+
 .pin-checkbox {
     margin-right: 12px;
     height: 15px;
@@ -149,7 +169,7 @@ button {
     color: #3d4d83;
     cursor: pointer;
     margin-top: 12px;
-    background-color: #F6F8FA;
+    background-color: #f6f8fa;
     border: none;
     padding: 0px;
     margin-right: auto;
@@ -161,16 +181,16 @@ button {
 
 #clearBtn {
     transition: color 0.3s ease;
-    color: #A2302A;
+    color: #a2302a;
     cursor: pointer;
     margin-top: 12px;
-    background-color: #F6F8FA;
+    background-color: #f6f8fa;
     border: none;
     padding: 0px;
 }
-  
+
 #clearBtn:hover {
-    color: rgb(118, 35, 29)
+    color: rgb(118, 35, 29);
 }
 
 .screenshot-container {
@@ -188,30 +208,38 @@ button {
 /* Styles for the popup */
 #successMsg {
     position: absolute;
-    background-color: #2C2C2C;
+    background-color: #2c2c2c;
     padding: 10px;
     border-radius: 4px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     animation: fadeInOut 2s ease-in-out;
     color: white;
 }
-  
+
 .hidden {
     display: none;
 }
 
 @keyframes fadeInOut {
-    0% { opacity: 0; }
-    20% { opacity: 1; }
-    80% { opacity: 1; }
-    100% { opacity: 0; }
+    0% {
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }
 
 #clearConfirmation {
     display: flex;
     flex-direction: column;
     padding: 16px 24px;
-    background-color: #2C2C2C;
+    background-color: #2c2c2c;
     color: white;
     border-radius: 8px;
     align-items: start;
@@ -237,7 +265,7 @@ button {
 
 .clearModalBtn {
     background-color: white;
-    color: #2C2C2C;
+    color: #2c2c2c;
     border: none;
     border-radius: 4px;
     padding: 4px 8px;
@@ -246,7 +274,7 @@ button {
 }
 
 .kill {
-    background-color: #A2302A;
+    background-color: #a2302a;
     color: white;
     margin-left: auto;
     margin-right: 0px;
