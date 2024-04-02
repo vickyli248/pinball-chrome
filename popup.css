@@ -11,15 +11,15 @@
 }
 /* style.css */
 body {
-    padding: 16px 24px 16px 24px;
+    padding: 16px 16px 16px 16px;
     width: 600px;
     margin: 0;
-    background: #f6f8fa;
+    background: #ffffff;
     box-sizing: border-box;
 }
 
 .ext-wrapper {
-    padding: 16px 24px 16px 24px;
+    padding: 16px 16px 16px 16px;
     width: 600px;
     margin: 0;
     box-sizing: border-box;
@@ -57,14 +57,14 @@ p {
     text-align: center;
     display: flex;
     position: fixed;
+    width: 568px;
     justify-content: space-between;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 12px;
     background: #f6f8fa;
+    border-radius: 8px;
     align-items: center;
-    width: 100%;
-    padding: 16px 0px 12px 0px;
+    padding: 12px 0px 12px 0px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 #inputField {
@@ -97,7 +97,7 @@ button {
     font-size: 1.5em;
     margin-right: auto;
     height: 30px;
-    margin-left: 24px;
+    margin-left: 16px;
 }
 
 .pin-icon {
@@ -127,7 +127,7 @@ button {
 }
 
 #exportPinsBtn {
-    margin: 0 24px 0 8px;
+    margin: 0 16px 0 8px;
     background-color: #525762;
 }
 
@@ -150,7 +150,7 @@ button {
 
 #pinSection {
     width: 100%;
-    padding-top: 48px;
+    padding-top: 68px;
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -193,14 +193,17 @@ button {
 #actionRow {
     display: flex;
     flex-direction: row;
-    width: 100%;
+    width: 568px;
     background-color: #f6f8fa;
+    border-radius: 8px;
     position: fixed;
-    bottom: 0;
+    bottom: 8px;
     justify-content: space-between; /* Aligns items on opposite ends */
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
 }
 
-#clearBtn, #deletePinBtn {
+#clearBtn,
+#deletePinBtn {
     transition: color 0.3s ease;
     color: #a2302a;
     cursor: pointer;
