@@ -13,6 +13,7 @@
 body {
     padding: 16px 16px 16px 16px;
     width: 600px;
+    /* min-height: 850px; */
     margin: 0;
     background: #ffffff;
     box-sizing: border-box;
@@ -64,7 +65,8 @@ p {
     border-radius: 8px;
     align-items: center;
     padding: 12px 0px 12px 0px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+
 }
 
 #inputField {
@@ -136,7 +138,7 @@ button {
 }
 
 #pinsEmptyState {
-    width: 100%;
+    width: 488px;
     height: 100px;
     display: flex;
     justify-content: center;
@@ -146,6 +148,8 @@ button {
     font-size: 1.2em;
     color: #979797;
     margin-top: 12px;
+    margin-bottom: 12px;
+    padding: 0 40px;
 }
 
 #pinSection {
@@ -197,9 +201,9 @@ button {
     background-color: #f6f8fa;
     border-radius: 8px;
     position: fixed;
-    bottom: 8px;
+    bottom: 12px;
     justify-content: space-between; /* Aligns items on opposite ends */
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0px 8px rgba(0, 0, 0, 0.15);
 }
 
 #clearBtn,
@@ -323,4 +327,5 @@ button {
     margin-right: 12px;
     font-size: 1.4em;
     font-weight: 700;
+    background-color: #ffffff;
 }

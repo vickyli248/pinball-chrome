@@ -3,7 +3,7 @@ var screenshotsList = []
 var doneScreenshotsList = []
 var showingTrash = false
 
-const screenshotButton = document.getElementById('captureBtn')
+const captureBtn = document.getElementById('captureBtn')
 const inputField = document.getElementById('inputField')
 const actionRow = document.getElementById('actionRow')
 const clearBtn = document.getElementById('clearBtn')
@@ -24,9 +24,23 @@ document.addEventListener('DOMContentLoaded', function () {
         chrome.runtime.sendMessage({ command: 'takeScreenshot' })
     }
 
-    screenshotButton.addEventListener('click', function () {
-        takeScreenshot()
-    })
+    // Debounce function
+    function debounce(func, delay) {
+        let timer
+        return function () {
+            const context = this
+            const args = arguments
+            clearTimeout(timer)
+            timer = setTimeout(() => {
+                func.apply(context, args)
+            }, delay)
+        }
+    }
+    const debouncedCapture = debounce(takeScreenshot, 250)
+
+    document
+        .getElementById('captureBtn')
+        .addEventListener('click', debouncedCapture)
 
     inputField.addEventListener('keydown', function (event) {
         // Check if the pressed key is 'enter' (key code 13)
@@ -138,7 +152,8 @@ function saveScreenshotAndCaption(
 
 function loadStoredScreenshots() {
     seeTrashBtn.textContent = 'See resolved pins'
-    pinHeaderText.textContent = 'Your pins'
+    pinHeaderText.textContent = 'Your open pins'
+    pinsEmptyState.textContent = "hmmm nothing yet... let's get pinning!"
     showingTrash = false
 
     chrome.storage.local.get({ screenshots: [] }, function (data) {
@@ -203,7 +218,9 @@ function loadStoredScreenshots() {
 
 function loadTrash() {
     seeTrashBtn.textContent = 'See open pins'
-    pinHeaderText.textContent = 'Resolved pins'
+    pinHeaderText.textContent = 'You got these done!'
+    pinsEmptyState.textContent =
+        'You have nothing here! Go complete something. Unless you already deleted them, in which case, good work!'
     showingTrash = true
 
     chrome.storage.local.get({ trash: [] }, function (data) {
