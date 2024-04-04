@@ -58,13 +58,12 @@ p {
     text-align: center;
     display: flex;
     position: fixed;
-    width: 568px;
+    width: 100%;
     justify-content: space-between;
-    top: 12px;
+    top: 0;
     background: #f6f8fa;
-    border-radius: 8px;
     align-items: center;
-    padding: 12px 0px 12px 0px;
+    padding: 16px 0px 16px 0px;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
 
 }
@@ -197,11 +196,10 @@ button {
 #actionRow {
     display: flex;
     flex-direction: row;
-    width: 568px;
+    width: 100%;
     background-color: #f6f8fa;
-    border-radius: 8px;
     position: fixed;
-    bottom: 12px;
+    bottom: 0;
     justify-content: space-between; /* Aligns items on opposite ends */
     box-shadow: 0 0px 8px rgba(0, 0, 0, 0.15);
 }
@@ -214,7 +212,7 @@ button {
     background-color: #f6f8fa;
     border: none;
     padding: 0;
-    margin: 12px 24px;
+    margin: 12px 16px;
 }
 
 #clearBtn:hover {
@@ -228,7 +226,7 @@ button {
     background-color: #f6f8fa;
     border: none;
     padding: 0;
-    margin: 12px 24px;
+    margin: 12px 16px;
 }
 
 #seeTrashBtn:hover {
