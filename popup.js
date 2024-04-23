@@ -19,28 +19,21 @@ const pinHeaderText = document.getElementById('pinHeaderText')
 document.addEventListener('DOMContentLoaded', function () {
     inputField.focus()
 
-    function takeScreenshot() {
-        // Take the screenshot
-        chrome.runtime.sendMessage({ command: 'takeScreenshot' })
-    }
+    let capturingScreenshot = false
 
-    // Debounce function
-    function debounce(func, delay) {
-        let timer
-        return function () {
-            const context = this
-            const args = arguments
-            clearTimeout(timer)
-            timer = setTimeout(() => {
-                func.apply(context, args)
-            }, delay)
+    function takeScreenshot() {
+        if (!capturingScreenshot) {
+            capturingScreenshot = true
+            chrome.tabs.captureVisibleTab(null, {}, function (screenshotUrl) {
+                chrome.runtime.sendMessage({ command: 'takeScreenshot' })
+                capturingScreenshot = false
+            })
         }
     }
-    const debouncedCapture = debounce(takeScreenshot, 250)
 
     document
         .getElementById('captureBtn')
-        .addEventListener('click', debouncedCapture)
+        .addEventListener('click', takeScreenshot)
 
     inputField.addEventListener('keydown', function (event) {
         // Check if the pressed key is 'enter' (key code 13)
@@ -150,12 +143,37 @@ function saveScreenshotAndCaption(
     })
 }
 
-function loadStoredScreenshots() {
-    seeTrashBtn.textContent = 'See resolved pins'
-    pinHeaderText.textContent = 'Your open pins'
-    pinsEmptyState.textContent = "hmmm nothing yet... let's get pinning!"
-    showingTrash = false
+// Function to save the edited content
+function saveEditedContent(screenshotId, editedContent) {
+    chrome.storage.local.get({ screenshots: [] }, function (data) {
+        var screenshots = data.screenshots
 
+        // Find the screenshot with the specified ID
+        var screenshotIndex = screenshots.findIndex(function (item) {
+            return item.id === screenshotId
+        })
+
+        if (screenshotIndex !== -1) {
+            // Update the caption of the screenshot
+            screenshots[screenshotIndex].caption = editedContent
+
+            // Save the updated list of screenshots back to the local storage
+            chrome.storage.local.set({ screenshots: screenshots }, function () {
+                console.log(
+                    'Edited content saved for screenshot with ID:',
+                    screenshotId,
+                )
+            })
+        } else {
+            console.log('Screenshot with ID', screenshotId, 'not found.')
+        }
+    })
+
+    // Implement your save functionality here
+    console.log('Edited content saved for screenshot with ID:', screenshotId)
+}
+
+function loadStoredScreenshots() {
     chrome.storage.local.get({ screenshots: [] }, function (data) {
         var screenshots = data.screenshots
         console.log('load screenshot func screenshots', screenshots)
@@ -180,6 +198,7 @@ function loadStoredScreenshots() {
 
             var pinContent = document.createElement('div')
             pinContent.className = 'pin-content'
+            pinContent.style.width = '100%'
             pin.appendChild(pinContent)
 
             var checkbox = document.createElement('input')
@@ -195,12 +214,57 @@ function loadStoredScreenshots() {
                 }
             })
 
+            var textWrapper = document.createElement('div')
+            textWrapper.style.display = 'flex' // Set display flex for the text and edit button
+            textWrapper.style.alignItems = 'center' // Align items in the center
+            textWrapper.style.width = '100%'
+            pinContent.appendChild(textWrapper)
+
             var textElement = document.createElement('p')
             textElement.textContent = screenshot.caption
             if (screenshot.caption === 'we saved this screenshot for you <3') {
                 textElement.style.color = '#9c9c9c'
             }
-            pinContent.appendChild(textElement)
+            textElement.style.marginRight = 'auto'
+            textWrapper.appendChild(textElement)
+
+            // Add event listener for keydown event on the editable text element
+            textElement.addEventListener('keydown', function (event) {
+                // Check if the Enter key is pressed
+                if (event.keyCode === 13) {
+                    // Prevent the default behavior of the Enter key (avoid line breaks)
+                    event.preventDefault()
+                    // Save the edited content
+                    saveEditedContent(screenshot.id, textElement.textContent)
+                    // Make the text content non-editable again
+                    textElement.contentEditable = false
+                }
+            })
+
+            var editButton = document.createElement('button')
+            editButton.className = 'edit-button'
+            editButton.style.backgroundColor = '#ffffff'
+            editButton.style.border = 'none'
+            editButton.style.cursor = 'pointer'
+            editButton.onclick = function () {
+                // Make text content editable
+                textElement.contentEditable = true
+                // Focus on the text element to allow editing
+                textElement.focus()
+                // Implement your edit functionality here
+                console.log('Edit button clicked for:', screenshot.caption)
+            }
+            textWrapper.appendChild(editButton)
+
+            var editIcon = document.createElement('img')
+            editIcon.src = 'edit-icon.svg' // Replace 'edit-icon.png' with the path to your icon image
+            editIcon.alt = 'Edit'
+            editIcon.style.border = 'none'
+            editIcon.style.borderRadius = '0'
+            editIcon.style.width = '15px'
+            editIcon.style.height = '15px'
+            editIcon.style.fill = 'red'
+            editButton.appendChild(editIcon)
 
             var img = document.createElement('img')
             img.src = screenshot.url
@@ -213,6 +277,14 @@ function loadStoredScreenshots() {
         } else {
             pinsEmptyState.style.display = 'flex'
         }
+        seeTrashBtn.textContent = 'See resolved pins'
+        if (screenshotsList.length === 1) {
+            pinHeaderText.textContent = `You have ${screenshotsList.length} open pin`
+        } else {
+            pinHeaderText.textContent = `You have ${screenshotsList.length} open pins`
+        }
+        pinsEmptyState.textContent = "hmmm nothing yet... let's get pinning!"
+        showingTrash = false
     })
 }
 
